@@ -1,0 +1,35 @@
+.root {
+  height: var(--size-tabstrip);
+  background: var(--color-paper);
+  border-bottom: 1px solid var(--color-hairline);
+  display: flex;
+  align-items: stretch;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.tab {
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--color-ink3);
+  border-right: 1px solid var(--color-hairline);
+  border-top: 2px solid transparent;
+  cursor: pointer;
+}
+
+.tab[data-active='true'] {
+  color: var(--color-ink0);
+  background: var(--color-surface1);
+  border-top-color: var(--color-signal);
+  font-weight: 600;
+}
+
+.close {
+  color: var(--color-ink4);
+  font-size: 12px;
+}
+
+.spacer { flex: 1; }
