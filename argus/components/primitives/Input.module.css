@@ -1,0 +1,33 @@
+.wrap {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-hairline);
+  background: var(--color-surface1);
+  border-radius: 2px;
+  padding: 0 10px;
+  height: 32px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-ink1);
+}
+
+.wrap:focus-within {
+  border-color: var(--color-signal);
+  box-shadow: 0 0 0 1px var(--color-signal);
+}
+
+.prefix {
+  color: var(--color-ink3);
+  margin-right: 8px;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  outline: none;
+  flex: 1;
+  color: inherit;
+  font: inherit;
+}
+
+.input::placeholder { color: var(--color-ink3); }

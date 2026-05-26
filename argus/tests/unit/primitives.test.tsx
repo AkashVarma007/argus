@@ -3,6 +3,7 @@ import { render } from '@testing-library/react'
 import { LiveDot } from '@/components/primitives/LiveDot'
 import { Panel } from '@/components/primitives/Panel'
 import { Button } from '@/components/primitives/Button'
+import { Input } from '@/components/primitives/Input'
 
 describe('LiveDot', () => {
   it('renders a circle with default size 6', () => {
@@ -67,5 +68,17 @@ describe('Button', () => {
     const { container } = render(<Button disabled>x</Button>)
     const el = container.querySelector('button') as HTMLButtonElement
     expect(el.disabled).toBe(true)
+  })
+})
+
+describe('Input', () => {
+  it('renders with provided placeholder', () => {
+    const { getByPlaceholderText } = render(<Input placeholder="endpoint" />)
+    expect(getByPlaceholderText('endpoint')).toBeInTheDocument()
+  })
+
+  it('renders prefix slot', () => {
+    const { getByText } = render(<Input prefix="https://" />)
+    expect(getByText('https://')).toBeInTheDocument()
   })
 })
