@@ -1,0 +1,41 @@
+.root {
+  height: var(--size-titlebar);
+  background: var(--color-surface1);
+  border-bottom: 1px solid var(--color-hairline);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 14px;
+  font-family: var(--font-sans);
+  flex-shrink: 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.word {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-ink0);
+  letter-spacing: -0.005em;
+}
+
+.caption {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-ink3);
+}
+
+.spacer { flex: 1; }
+
+.right {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-ink2);
+}
