@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './TabStrip.module.css'
 
 export interface Tab {

@@ -1,0 +1,23 @@
+.root {
+  height: var(--size-footer);
+  background: var(--color-surface1);
+  border-top: 1px solid var(--color-hairline);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 18px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-ink2);
+  flex-shrink: 0;
+}
+
+.scope {
+  color: var(--color-ink1);
+}
+
+.spacer { flex: 1; }
+
+.hint {
+  color: var(--color-ink3);
+}
