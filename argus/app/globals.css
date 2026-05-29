@@ -13,6 +13,27 @@
   --color-glow:      rgba(43, 240, 127, 0.5);
   --color-warn:      #ffb4a8;
 
+  --color-bg0:       #050a11;
+  --color-bg1:       #0d141e;
+  --color-bg2:       #141d28;
+  --color-grid:      #1f2531;
+  --color-accent:    #67d8ff;
+  --color-pass:      #2bf07f;
+  --color-fail:      #ff6a6a;
+  --color-error:     #ff6a6a;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --text-xs:  11px;
+  --text-sm:  12px;
+  --text-md:  13px;
+  --text-lg:  15px;
+
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 

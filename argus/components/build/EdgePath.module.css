@@ -1,0 +1,17 @@
+.path {
+  fill: none;
+  stroke-width: 1.5;
+  pointer-events: stroke;
+  cursor: pointer;
+  transition: stroke-width 80ms ease-out;
+}
+.path[data-kind="membership"]       { stroke: var(--color-ink2); }
+.path[data-kind="dependency"]       { stroke: var(--color-accent); }
+.path[data-kind="prompt-uses-tool"] { stroke: var(--color-pass); }
+.path:hover {
+  stroke-width: 2.5;
+}
+.path[data-selected="true"] {
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 4px currentColor);
+}

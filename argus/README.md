@@ -23,4 +23,9 @@ E2E (Playwright) ships in Phase 6.
 
 ## Status
 
-Phase 2 — test engine. Run a scan against any HTTP MCP server. Optional companion packages `argus-proxy` and `argus-bridge` handle CORS and stdio respectively.
+Phase 3 — build engine. Visual canvas builder with codegen to TypeScript or Python MCP servers, downloaded as a zip.
+
+- `/test` — scan an HTTP MCP server for spec conformance (Phase 2).
+- `/build` — list builds. Open one to edit nodes (server, tool, prompt, resource, capability) on a pan/zoom canvas, then generate & download a runnable MCP server project (TS or Python).
+
+Optional companion packages `argus-proxy` and `argus-bridge` handle CORS and stdio respectively for the test engine. The build engine is fully browser-local.

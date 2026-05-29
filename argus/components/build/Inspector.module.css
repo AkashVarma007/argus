@@ -1,0 +1,65 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  border-left: 1px solid var(--color-hairline);
+  background: var(--color-surface1);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-ink1);
+  overflow: hidden;
+}
+
+.head {
+  padding: var(--space-2) var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--text-xs);
+  color: var(--color-ink2);
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  overflow-y: auto;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink2);
+}
+
+.select {
+  background: var(--color-paper);
+  color: var(--color-ink0);
+  border: 1px solid var(--color-hairline);
+  padding: 6px var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+.select:focus { outline: 1px solid var(--color-accent); }
+
+.danger {
+  background: transparent;
+  color: var(--color-fail);
+  border: 1px solid var(--color-fail);
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+.danger:hover {
+  background: var(--color-fail);
+  color: var(--color-paper);
+}

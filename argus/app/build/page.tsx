@@ -1,7 +1,49 @@
+'use client'
+
+import { useMemo } from 'react'
+import { useRouter } from 'next/navigation'
+import { BuildList } from '@/components/build/BuildList'
+import { useBuildsStore } from '@/lib/store/builds'
+import { createBuild } from '@/lib/build/factory'
+import type { BuildId } from '@/lib/store/types'
+import styles from './page.module.css'
+
 export default function BuildIndexPage() {
+  const router = useRouter()
+  const buildsMap = useBuildsStore((s) => s.builds)
+  const upsertBuild = useBuildsStore((s) => s.upsertBuild)
+  const removeBuild = useBuildsStore((s) => s.removeBuild)
+
+  const builds = useMemo(
+    () =>
+      Object.values(buildsMap).sort(
+        (a, b) => Date.parse(b.modifiedAt) - Date.parse(a.modifiedAt),
+      ),
+    [buildsMap],
+  )
+
+  function handleCreate() {
+    const fresh = createBuild('new-server')
+    upsertBuild(fresh)
+    router.push(`/build/${fresh.id}`)
+  }
+
+  function handleOpen(id: BuildId) {
+    router.push(`/build/${id}`)
+  }
+
+  function handleDelete(id: BuildId) {
+    removeBuild(id)
+  }
+
   return (
-    <section style={{ padding: 32, fontFamily: 'var(--font-mono)', color: 'var(--color-ink2)' }}>
-      build · list · placeholder
+    <section className={styles.root}>
+      <BuildList
+        builds={builds}
+        onCreate={handleCreate}
+        onOpen={handleOpen}
+        onDelete={handleDelete}
+      />
     </section>
   )
 }

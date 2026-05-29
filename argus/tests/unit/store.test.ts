@@ -67,7 +67,7 @@ describe('scans store', () => {
 })
 
 const fixtureBuild: Build = {
-  id: 'github-readonly',
+  id: 'BLD-github-readonly',
   name: 'github-readonly',
   language: 'typescript',
   packageMeta: { name: 'github-readonly', version: '0.1.0', description: '', license: 'MIT' },
@@ -85,16 +85,16 @@ describe('builds store', () => {
 
   it('upserts a build keyed by id', () => {
     useBuildsStore.getState().upsertBuild(fixtureBuild)
-    expect(useBuildsStore.getState().builds['github-readonly']).toEqual(fixtureBuild)
+    expect(useBuildsStore.getState().builds['BLD-github-readonly']).toEqual(fixtureBuild)
   })
 
   it('lists builds by modifiedAt desc', () => {
-    const older = { ...fixtureBuild, id: 'older', name: 'older', modifiedAt: '2026-05-20T00:00:00Z' }
+    const older: Build = { ...fixtureBuild, id: 'BLD-older', name: 'older', modifiedAt: '2026-05-20T00:00:00Z' }
     useBuildsStore.getState().upsertBuild(older)
     useBuildsStore.getState().upsertBuild(fixtureBuild)
     const list = useBuildsStore.getState().list()
-    expect(list[0].id).toBe('github-readonly')
-    expect(list[1].id).toBe('older')
+    expect(list[0].id).toBe('BLD-github-readonly')
+    expect(list[1].id).toBe('BLD-older')
   })
 })
 

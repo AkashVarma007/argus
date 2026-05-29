@@ -13,6 +13,15 @@ export type CheckStatus = 'pass' | 'fail' | 'skip' | 'error' | 'pending'
 
 export type ScanId = `SCN-${string}`
 
+export type BuildId = `BLD-${string}`
+
+export interface BuildIssue {
+  nodeId?: string
+  edgeId?: string
+  severity: 'error' | 'warning'
+  message: string
+}
+
 export interface CheckResult {
   checkId: string
   category: string
@@ -84,7 +93,7 @@ export interface BuildEdge {
 }
 
 export interface Build {
-  id: string
+  id: BuildId
   name: string
   language: 'typescript' | 'python'
   packageMeta: ServerMeta
