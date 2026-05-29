@@ -1,0 +1,28 @@
+{
+  "name": "argus-bridge",
+  "version": "0.1.0",
+  "description": "WebSocket-to-stdio bridge for testing stdio-only MCP servers from the Argus web app",
+  "license": "MIT",
+  "type": "module",
+  "bin": { "argus-bridge": "./dist/cli.js" },
+  "main": "./dist/server.js",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc -p .",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p . --noEmit"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/ws": "^8.5.13",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": { "node": ">=20" }
+}

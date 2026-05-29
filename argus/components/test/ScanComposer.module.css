@@ -1,0 +1,22 @@
+/* argus/components/test/ScanComposer.module.css */
+.root {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  font-family: var(--font-mono);
+}
+.field { display: grid; grid-template-columns: 200px 1fr; gap: var(--space-2); align-items: center; }
+.field > span { color: var(--color-ink2); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; }
+.field > input, .field > select {
+  background: var(--color-bg1); color: var(--color-ink0);
+  border: 1px solid var(--color-grid); padding: var(--space-2);
+  font-family: var(--font-mono); font-size: var(--text-sm);
+}
+.run {
+  justify-self: start; margin-top: var(--space-3);
+  background: var(--color-ink0); color: var(--color-bg0);
+  border: none; padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono); font-size: var(--text-sm); cursor: pointer;
+}
+.run:hover { background: var(--color-accent); }

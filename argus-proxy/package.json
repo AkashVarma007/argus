@@ -1,0 +1,33 @@
+{
+  "name": "argus-proxy",
+  "version": "0.1.0",
+  "description": "Local CORS proxy for testing MCP servers from the Argus web app",
+  "license": "MIT",
+  "type": "module",
+  "bin": { "argus-proxy": "./dist/cli.js" },
+  "main": "./dist/server.js",
+  "types": "./dist/server.d.ts",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc -p .",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p . --noEmit"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "supertest": "^7.0.0",
+    "@types/supertest": "^6.0.2"
+  },
+  "engines": { "node": ">=20" }
+}

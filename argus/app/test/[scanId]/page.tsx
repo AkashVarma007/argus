@@ -1,12 +1,11 @@
+// argus/app/test/[scanId]/page.tsx
+import ClientView from './ClientView'
+
 interface Props { params: Promise<{ scanId: string }> }
 
-export default async function TestScanPage({ params }: Props) {
+export default async function ScanDetailPage({ params }: Props) {
   const { scanId } = await params
-  return (
-    <section style={{ padding: 32, fontFamily: 'var(--font-mono)', color: 'var(--color-ink2)' }}>
-      test · scan {scanId} · placeholder
-    </section>
-  )
+  return <ClientView scanId={scanId} />
 }
 
 export function generateStaticParams() {

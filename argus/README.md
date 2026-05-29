@@ -23,4 +23,4 @@ E2E (Playwright) ships in Phase 6.
 
 ## Status
 
-Phase 1 — shell scaffolding (this directory).
+Phase 2 — test engine. Run a scan against any HTTP MCP server. Optional companion packages `argus-proxy` and `argus-bridge` handle CORS and stdio respectively.
