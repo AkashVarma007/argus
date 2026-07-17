@@ -415,7 +415,7 @@ Phases 1–6 complete. Argus is a browser-only MCP conformance, build, and learn
 
 ## 📄 License
 
-The companion packages (`argus-bridge`, `argus-proxy`) declare **MIT**. The main `argus` app is currently marked `private` with no `LICENSE` file committed — treat it as all-rights-reserved until one lands.
+Released under the [MIT License](../LICENSE) — © 2026 Akash Varma.
 
 <div align="center">
 

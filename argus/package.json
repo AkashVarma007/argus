@@ -3,6 +3,26 @@
   "private": true,
   "version": "0.1.0",
   "description": "Argus — MCP conformance, build, and learn platform",
+  "license": "MIT",
+  "author": "Akash Varma <g.akashvarma@gmail.com>",
+  "homepage": "https://github.com/AkashVarma007/argus#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AkashVarma007/argus.git",
+    "directory": "argus"
+  },
+  "bugs": {
+    "url": "https://github.com/AkashVarma007/argus/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "conformance",
+    "nextjs",
+    "react",
+    "typescript",
+    "developer-tools"
+  ],
   "type": "module",
   "scripts": {
     "dev": "next dev",

@@ -17,6 +17,8 @@
   <a href="argus/README.md#-tests"><img alt="Tests" src="https://img.shields.io/badge/tests-522%20passing-2bf07f?style=flat-square&logo=vitest&logoColor=white"></a>
   <a href="#-the-three-tools"><img alt="Spec" src="https://img.shields.io/badge/spec-MCP%20DRAFT--2026--v1-2bf07f?style=flat-square"></a>
   <a href="#-architecture"><img alt="Backend" src="https://img.shields.io/badge/backend-none%20·%20localStorage-828b97?style=flat-square"></a>
+  <a href="https://github.com/AkashVarma007/argus/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/AkashVarma007/argus/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-2bf07f?style=flat-square"></a>
 </p>
 
 </div>
@@ -182,7 +184,9 @@ pnpm test:e2e
 
 ## 📄 License
 
-The companion CLIs (`argus-bridge`, `argus-proxy`) declare **MIT**. The `argus` app is currently marked `private` with no `LICENSE` file committed — treat it as all-rights-reserved until one lands.
+Released under the [MIT License](LICENSE) — © 2026 Akash Varma. Do what you like; no warranty.
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) to get started, [`SECURITY.md`](SECURITY.md) to report a vulnerability, and the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 <div align="center">
 

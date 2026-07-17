@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentation
+    url: https://github.com/AkashVarma007/argus#readme
+    about: Read the README and the docs/ folder before filing an issue.
+  - name: 🔒 Security report
+    url: https://github.com/AkashVarma007/argus/blob/main/SECURITY.md
+    about: Please report vulnerabilities privately — do not open a public issue.

@@ -1,0 +1,51 @@
+name: 🐛 Bug report
+description: Report a problem in Argus
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to file a bug. Please fill out the sections below.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part?
+      options:
+        - Test (conformance scanner)
+        - Build (server composer)
+        - Learn (spec browser)
+        - argus-bridge (stdio relay)
+        - argus-proxy (CORS relay)
+        - Other / not sure
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, including any error text.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to '...'
+        2. Click '...'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: false
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, browser + version, Node version.
+      placeholder: "macOS 14 · Chrome 140 · Node 20.11"
+    validations:
+      required: false
