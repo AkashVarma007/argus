@@ -5,6 +5,7 @@ import { useState } from 'react'
 import styles from './ScanComposer.module.css'
 import { usePrefsStore } from '@/lib/store/prefs'
 import type { SpecVersion } from '@/lib/conformance/types'
+import * as bridgeMod from '@/lib/conformance/transport/bridge'
 
 export type Transport = 'http' | 'sse' | 'stdio-ws'
 
@@ -33,12 +34,45 @@ export function ScanComposer({ onStart }: Props) {
   const [bridgeCommand, setBridgeCommand] = useState('')
   const [bearer, setBearer] = useState('')
   const [authMode, setAuthMode] = useState<ScanConfig['authMode']>('none')
+  const [probeState, setProbeState] = useState<'idle' | 'checking' | 'ok' | string>('idle')
+  const [submitError, setSubmitError] = useState<string | null>(null)
+
+  async function checkBridge() {
+    setProbeState('checking')
+    try {
+      const res = await bridgeMod.probeBridge(bridgeUrl)
+      setProbeState(res)
+    } catch (err) {
+      setProbeState((err as Error).message || 'probe error')
+    }
+  }
+
+  function deriveStdioLabel(cmd: string): string {
+    const first = cmd.trim().split(/\s+/).find((tok) => !tok.startsWith('-')) ?? ''
+    const tail = first.split(/[\\/]/).pop() ?? first
+    return tail ? `stdio://${tail}` : 'stdio://server'
+  }
 
   function submit(e: React.FormEvent) {
     e.preventDefault()
-    if (!endpoint) return
+    setSubmitError(null)
+    if (transport === 'stdio-ws') {
+      if (!bridgeUrl) {
+        setSubmitError('Bridge URL is required for stdio.')
+        return
+      }
+      if (!bridgeCommand) {
+        setSubmitError('Exec command is required for stdio.')
+        return
+      }
+    } else if (!endpoint) {
+      setSubmitError('Endpoint URL is required.')
+      return
+    }
+    const effectiveEndpoint =
+      endpoint || (transport === 'stdio-ws' ? deriveStdioLabel(bridgeCommand) : '')
     onStart({
-      endpoint, transport, spec,
+      endpoint: effectiveEndpoint, transport, spec,
       proxyUrl: proxyUrl || undefined,
       bridgeUrl: transport === 'stdio-ws' ? bridgeUrl : undefined,
       bridgeCommand: transport === 'stdio-ws' ? bridgeCommand : undefined,
@@ -108,6 +142,29 @@ export function ScanComposer({ onStart }: Props) {
               onChange={(e) => setBridgeUrl(e.target.value)}
             />
           </label>
+          <p className={styles.hint}>
+            Install: <code>npm i -g argus-bridge</code> then run <code>argus-bridge</code> (or
+            pin a fixed command with <code>argus-bridge --cmd &quot;node server.js&quot;</code>).
+          </p>
+          <div className={styles.bridgeRow}>
+            <button
+              type="button"
+              className={styles.secondary}
+              onClick={checkBridge}
+              disabled={probeState === 'checking'}
+            >
+              Check bridge
+            </button>
+            {probeState === 'checking' && (
+              <span className={styles.probeMuted}>checking…</span>
+            )}
+            {probeState === 'ok' && (
+              <span className={styles.probeOk}>bridge ok</span>
+            )}
+            {probeState !== 'idle' && probeState !== 'checking' && probeState !== 'ok' && (
+              <span className={styles.probeErr}>{probeState}</span>
+            )}
+          </div>
           <label className={styles.field}>
             <span>Exec command</span>
             <input
@@ -142,6 +199,11 @@ export function ScanComposer({ onStart }: Props) {
         </select>
       </label>
 
+      {submitError && (
+        <p className={styles.submitError} role="alert" data-argus="composer-error">
+          {submitError}
+        </p>
+      )}
       <button type="submit" className={styles.run}>Run scan</button>
     </form>
   )

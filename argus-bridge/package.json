@@ -2,16 +2,35 @@
   "name": "argus-bridge",
   "version": "0.1.0",
   "description": "WebSocket-to-stdio bridge for testing stdio-only MCP servers from the Argus web app",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "stdio",
+    "websocket",
+    "bridge",
+    "argus",
+    "conformance"
+  ],
+  "homepage": "https://github.com/AkashVarma007/argus#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AkashVarma007/argus.git",
+    "directory": "argus-bridge"
+  },
+  "bugs": {
+    "url": "https://github.com/AkashVarma007/argus/issues"
+  },
   "license": "MIT",
   "type": "module",
   "bin": { "argus-bridge": "./dist/cli.js" },
   "main": "./dist/server.js",
   "files": ["dist", "README.md"],
   "scripts": {
-    "build": "tsc -p .",
+    "build": "tsc -p . && chmod +x dist/cli.js",
     "dev": "tsx src/cli.ts",
     "test": "vitest run",
-    "typecheck": "tsc -p . --noEmit"
+    "typecheck": "tsc -p . --noEmit",
+    "prepublishOnly": "pnpm build && pnpm test"
   },
   "dependencies": {
     "commander": "^12.1.0",

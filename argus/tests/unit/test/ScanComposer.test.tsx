@@ -1,7 +1,8 @@
 // argus/tests/unit/test/ScanComposer.test.tsx
-import { render, screen, fireEvent } from '@testing-library/react'
-import { describe, it, expect, vi } from 'vitest'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { ScanComposer } from '@/components/test/ScanComposer'
+import * as bridgeMod from '@/lib/conformance/transport/bridge'
 
 describe('ScanComposer', () => {
   it('renders endpoint + transport + spec controls', () => {
@@ -29,4 +30,33 @@ describe('ScanComposer', () => {
     expect(screen.getByLabelText(/bridge url/i)).toBeTruthy()
     expect(screen.getByLabelText(/exec command/i)).toBeTruthy()
   })
+
+  it('shows bridge install hint when stdio-ws selected', () => {
+    render(<ScanComposer onStart={() => {}} />)
+    fireEvent.change(screen.getByLabelText(/transport/i), { target: { value: 'stdio-ws' } })
+    expect(screen.getByText(/npm i -g argus-bridge/i)).toBeTruthy()
+  })
+
+  it('Check bridge button reports ok when probe resolves ok', async () => {
+    const spy = vi.spyOn(bridgeMod, 'probeBridge').mockResolvedValue('ok')
+    render(<ScanComposer onStart={() => {}} />)
+    fireEvent.change(screen.getByLabelText(/transport/i), { target: { value: 'stdio-ws' } })
+    fireEvent.click(screen.getByRole('button', { name: /check bridge/i }))
+    await waitFor(() => expect(spy).toHaveBeenCalledWith('ws://127.0.0.1:7879/bridge'))
+    await waitFor(() => expect(screen.getByText(/bridge ok/i)).toBeTruthy())
+    spy.mockRestore()
+  })
+
+  it('Check bridge button reports error string when probe fails', async () => {
+    const spy = vi.spyOn(bridgeMod, 'probeBridge').mockResolvedValue('connection refused')
+    render(<ScanComposer onStart={() => {}} />)
+    fireEvent.change(screen.getByLabelText(/transport/i), { target: { value: 'stdio-ws' } })
+    fireEvent.click(screen.getByRole('button', { name: /check bridge/i }))
+    await waitFor(() => expect(screen.getByText(/connection refused/i)).toBeTruthy())
+    spy.mockRestore()
+  })
+})
+
+beforeEach(() => {
+  vi.restoreAllMocks()
 })

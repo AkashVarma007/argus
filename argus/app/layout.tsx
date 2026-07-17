@@ -4,6 +4,7 @@ import { inter, jetbrainsMono } from '@/lib/fonts'
 import { TitleBar } from '@/components/chrome/TitleBar'
 import { TabStrip } from '@/components/chrome/TabStrip'
 import { Footer } from '@/components/chrome/Footer'
+import { KeyboardNav } from '@/components/chrome/KeyboardNav'
 import styles from './layout.module.css'
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <TabStrip tabs={tabs} activeId="home" />
           <main className={styles.content}>{children}</main>
           <Footer scope="home" />
+          <KeyboardNav />
         </div>
       </body>
     </html>

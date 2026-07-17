@@ -11,7 +11,7 @@ interface Props {
 export function GradeReveal({ grade, summary, durationMs }: Props) {
   const total = summary.pass + summary.fail + summary.skip + summary.error
   return (
-    <div className={styles.root} data-grade={grade}>
+    <div className={styles.root} data-grade={grade} data-argus="grade-reveal">
       <div className={styles.letter}>{grade}</div>
       <dl className={styles.summary}>
         <div><dt>pass</dt><dd>{summary.pass} / {total}</dd></div>

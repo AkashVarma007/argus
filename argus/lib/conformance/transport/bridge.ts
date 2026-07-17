@@ -7,6 +7,34 @@ let _WS: WSCtor = globalThis.WebSocket as unknown as WSCtor
 
 export function __setWebSocketCtor(ctor: WSCtor): void { _WS = ctor }
 
+interface ProbeOpts { timeoutMs?: number }
+
+export function probeBridge(bridgeUrl: string, opts: ProbeOpts = {}): Promise<'ok' | string> {
+  const timeoutMs = opts.timeoutMs ?? 1500
+  const url = `${bridgeUrl}?exec=&protocol=probe`
+  return new Promise<'ok' | string>((resolve) => {
+    let done = false
+    const finish = (v: 'ok' | string) => {
+      if (done) return
+      done = true
+      clearTimeout(timer)
+      try { ws.close() } catch { /* already closed */ }
+      resolve(v)
+    }
+    const timer = setTimeout(() => finish('ok'), timeoutMs)
+    const ws = new _WS(url)
+    ws.onclose = (e: CloseEvent) => {
+      const code = e?.code ?? 0
+      if (code === 4001) finish('ok')
+      else finish(e?.reason || `bridge closed (code ${code})`)
+    }
+    ws.onerror = (e: Event) => {
+      const msg = (e as Event & { message?: string })?.message
+      finish(msg || `bridge error: ${e?.type ?? 'unknown'}`)
+    }
+  })
+}
+
 interface Pending {
   resolve: (r: JsonRpcResponse) => void
   reject: (e: Error) => void

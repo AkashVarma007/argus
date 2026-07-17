@@ -8,3 +8,17 @@
 .ts { color: var(--color-ink3); }
 .summary { color: var(--color-ink0); }
 .json { margin: 0; padding: var(--space-3); background: var(--color-bg2); color: var(--color-ink1); overflow-x: auto; }
+.loadMore {
+  display: block;
+  width: 100%;
+  padding: var(--space-2);
+  background: var(--color-bg1);
+  color: var(--color-ink2);
+  border: 1px solid var(--color-grid);
+  border-bottom: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  text-align: left;
+}
+.loadMore:hover { background: var(--color-bg0); color: var(--color-accent); }

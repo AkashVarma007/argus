@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react'
 import { useRouter } from 'next/navigation'
+import type { Route } from 'next'
 import { BuildList } from '@/components/build/BuildList'
 import { useBuildsStore } from '@/lib/store/builds'
 import { createBuild } from '@/lib/build/factory'
@@ -25,11 +26,11 @@ export default function BuildIndexPage() {
   function handleCreate() {
     const fresh = createBuild('new-server')
     upsertBuild(fresh)
-    router.push(`/build/${fresh.id}`)
+    router.push(`/build/canvas?id=${encodeURIComponent(fresh.id)}` as Route)
   }
 
   function handleOpen(id: BuildId) {
-    router.push(`/build/${id}`)
+    router.push(`/build/canvas?id=${encodeURIComponent(id)}` as Route)
   }
 
   function handleDelete(id: BuildId) {

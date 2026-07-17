@@ -20,6 +20,7 @@ export interface BuildIssue {
   edgeId?: string
   severity: 'error' | 'warning'
   message: string
+  specRef?: string
 }
 
 export interface CheckResult {

@@ -6,6 +6,9 @@
   align-items: stretch;
   font-family: var(--font-mono);
   flex-shrink: 0;
+  position: sticky;
+  top: var(--size-titlebar);
+  z-index: 49;
 }
 
 .tab {

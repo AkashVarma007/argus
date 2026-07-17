@@ -72,4 +72,53 @@ describe('createBridgeServer', () => {
     await new Promise<void>((resolve) => bridge.close(resolve))
     expect(code).toBe(4002)
   })
+
+  it('uses fixedExec when set and ignores ?exec= from URL', async () => {
+    const bridge = createBridgeServer({ allowShell: false, fixedExec: 'cat' })
+    const port = await listen(bridge.server)
+
+    const ws = await open(port, 'protocol=2025-11-25')
+
+    const payload = '{"jsonrpc":"2.0","id":1,"method":"ping"}'
+    ws.send(payload)
+    const received = await new Promise<string>((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error('timeout')), 1000)
+      ws.on('message', (d) => {
+        clearTimeout(t)
+        resolve(d.toString())
+      })
+    })
+
+    try {
+      expect(received).toBe(payload)
+    } finally {
+      ws.close()
+      await new Promise<void>((resolve) => bridge.close(resolve))
+    }
+  })
+
+  it('fixedExec ignores ?exec= from URL', async () => {
+    const bridge = createBridgeServer({ allowShell: false, fixedExec: 'cat' })
+    const port = await listen(bridge.server)
+
+    const ws = await open(
+      port,
+      `exec=${encodeURIComponent('nonexistent-command-xyz')}&protocol=2025-11-25`,
+    )
+    ws.send('hello-from-cat\n')
+    const received = await new Promise<string>((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error('timeout')), 1000)
+      ws.on('message', (d) => {
+        clearTimeout(t)
+        resolve(d.toString())
+      })
+    })
+
+    try {
+      expect(received).toBe('hello-from-cat')
+    } finally {
+      ws.close()
+      await new Promise<void>((resolve) => bridge.close(resolve))
+    }
+  })
 })

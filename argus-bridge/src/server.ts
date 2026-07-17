@@ -4,6 +4,7 @@ import { parseExec, spawnChild, type ParsedExec } from './spawn.js'
 
 export interface ServerOptions {
   allowShell: boolean
+  fixedExec?: string
 }
 
 export interface BridgeServer {
@@ -11,7 +12,7 @@ export interface BridgeServer {
   close(cb?: () => void): void
 }
 
-export function createBridgeServer({ allowShell }: ServerOptions): BridgeServer {
+export function createBridgeServer({ allowShell, fixedExec }: ServerOptions): BridgeServer {
   const httpServer: Server = createServer()
   const wss = new WebSocketServer({ noServer: true })
 
@@ -28,7 +29,7 @@ export function createBridgeServer({ allowShell }: ServerOptions): BridgeServer 
 
   wss.on('connection', (ws: WebSocket, req: import('node:http').IncomingMessage) => {
     const url = new URL(req.url ?? '/', `http://${req.headers.host ?? 'localhost'}`)
-    const exec = url.searchParams.get('exec')
+    const exec = fixedExec ?? url.searchParams.get('exec')
 
     if (!exec) {
       ws.close(4001, 'missing exec query parameter')

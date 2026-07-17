@@ -1,0 +1,77 @@
+.root {
+  width: 220px;
+  flex-shrink: 0;
+  border-left: 1px solid var(--color-hairline);
+  background: var(--color-surface1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-ink1);
+  padding: var(--space-3);
+  position: sticky;
+  top: calc(var(--size-titlebar) + var(--size-tabstrip));
+  align-self: flex-start;
+  max-height: calc(100vh - var(--size-titlebar) - var(--size-tabstrip));
+  overflow-y: auto;
+}
+
+.head,
+.subhead {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink2);
+  font-size: 10px;
+  margin: 0 0 var(--space-2);
+}
+
+.subhead {
+  margin-top: var(--space-4);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-hairline);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  padding: 4px var(--space-2);
+  color: var(--color-ink1);
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item:hover {
+  color: var(--color-ink0);
+}
+
+.itemDeep {
+  padding-left: calc(var(--space-2) + 12px);
+}
+
+.active {
+  border-left-color: var(--color-accent);
+  color: var(--color-ink0);
+}
+
+.empty {
+  margin: 0;
+  color: var(--color-ink3);
+  font-style: italic;
+}
+
+.check {
+  display: block;
+  padding: 2px var(--space-2);
+  color: var(--color-ink2);
+}

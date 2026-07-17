@@ -1,0 +1,35 @@
+.root {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  font-family: var(--font-mono);
+  border: 1px dashed var(--color-grid);
+  background: var(--color-bg1);
+}
+.heading {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-ink0);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.description {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-ink2);
+  line-height: 1.5;
+}
+.cta {
+  justify-self: start;
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-ink0);
+  color: var(--color-bg0);
+  text-decoration: none;
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.cta:hover { background: var(--color-accent); }

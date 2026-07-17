@@ -12,6 +12,22 @@ import { slugify } from './slug'
 
 const SEMVER_RE = /^\d+\.\d+\.\d+(?:-[\w.]+)?$/
 
+const SPEC_REF = {
+  noServer: 'spec://basic/lifecycle#protocol-version-negotiation',
+  multipleServers: 'spec://basic/lifecycle',
+  toolSchemaMissing: 'spec://server/tools#data-types',
+  toolDescriptionMissing: 'spec://server/tools#tool',
+  toolDuplicate: 'spec://server/tools#listing-tools',
+  promptDuplicate: 'spec://server/prompts#listing-prompts',
+  resourceDuplicate: 'spec://server/resources#listing-resources',
+  semverInvalid: 'spec://schema#implementation',
+  capabilityExposes: 'spec://architecture#capability-negotiation',
+  membershipEdge: 'spec://architecture#core-components',
+  promptUsesToolWrongTarget: 'spec://server/prompts#data-types',
+  edgeMissingEndpoint: 'spec://architecture#core-components',
+} as const
+
+
 function isPlainObject(v: unknown): v is Record<string, unknown> {
   return typeof v === 'object' && v !== null && !Array.isArray(v)
 }
@@ -21,13 +37,18 @@ export function validateBuild(b: Build): BuildIssue[] {
 
   const serverNodes = b.nodes.filter((n) => n.type === 'server')
   if (serverNodes.length === 0) {
-    issues.push({ severity: 'error', message: 'Build has no server node.' })
+    issues.push({
+      severity: 'error',
+      message: 'Build has no server node.',
+      specRef: SPEC_REF.noServer,
+    })
   } else if (serverNodes.length > 1) {
     for (const n of serverNodes.slice(1)) {
       issues.push({
         nodeId: n.id,
         severity: 'error',
         message: 'Build has more than one server node.',
+        specRef: SPEC_REF.multipleServers,
       })
     }
   }
@@ -39,6 +60,7 @@ export function validateBuild(b: Build): BuildIssue[] {
         edgeId: edge.id,
         severity: 'error',
         message: `Edge ${edge.id} references missing node.`,
+        specRef: SPEC_REF.edgeMissingEndpoint,
       })
     }
   }
@@ -54,6 +76,7 @@ export function validateBuild(b: Build): BuildIssue[] {
         nodeId: n.id,
         severity: 'error',
         message: `Duplicate tool name collides with ${prior.id} after slugify (${slug}).`,
+        specRef: SPEC_REF.toolDuplicate,
       })
     } else {
       toolSlugs.set(slug, n)
@@ -63,6 +86,7 @@ export function validateBuild(b: Build): BuildIssue[] {
         nodeId: n.id,
         severity: 'error',
         message: `Tool ${tool.name || '(unnamed)'} has missing or invalid inputSchema.`,
+        specRef: SPEC_REF.toolSchemaMissing,
       })
     }
     if (!tool.description || tool.description.trim() === '') {
@@ -70,6 +94,7 @@ export function validateBuild(b: Build): BuildIssue[] {
         nodeId: n.id,
         severity: 'warning',
         message: `Tool ${tool.name || '(unnamed)'} has no description.`,
+        specRef: SPEC_REF.toolDescriptionMissing,
       })
     }
   }
@@ -85,6 +110,7 @@ export function validateBuild(b: Build): BuildIssue[] {
         nodeId: n.id,
         severity: 'error',
         message: `Duplicate prompt name collides with ${prior.id} after slugify (${slug}).`,
+        specRef: SPEC_REF.promptDuplicate,
       })
     } else {
       promptSlugs.set(slug, n)
@@ -101,6 +127,7 @@ export function validateBuild(b: Build): BuildIssue[] {
         nodeId: n.id,
         severity: 'error',
         message: `Duplicate resource uri (${resource.uri}) collides with ${prior.id}.`,
+        specRef: SPEC_REF.resourceDuplicate,
       })
     } else {
       resourceUris.set(resource.uri, n)
@@ -116,6 +143,7 @@ export function validateBuild(b: Build): BuildIssue[] {
         edgeId: edge.id,
         severity: 'warning',
         message: `Edge ${edge.id} is prompt-uses-tool but targets a non-tool node.`,
+        specRef: SPEC_REF.promptUsesToolWrongTarget,
       })
     }
     if (edge.kind === 'membership' && serverNode) {
@@ -124,6 +152,7 @@ export function validateBuild(b: Build): BuildIssue[] {
           edgeId: edge.id,
           severity: 'warning',
           message: `Membership edge ${edge.id} does not connect to the server node.`,
+          specRef: SPEC_REF.membershipEdge,
         })
       }
     }
@@ -134,6 +163,7 @@ export function validateBuild(b: Build): BuildIssue[] {
     issues.push({
       severity: 'warning',
       message: `Package version "${meta.version}" is not valid semver.`,
+      specRef: SPEC_REF.semverInvalid,
     })
   }
 
@@ -145,6 +175,7 @@ export function validateBuild(b: Build): BuildIssue[] {
         nodeId: n.id,
         severity: 'error',
         message: 'Capability node missing exposes list.',
+        specRef: SPEC_REF.capabilityExposes,
       })
     }
   }

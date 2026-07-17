@@ -1,15 +1,20 @@
 // argus/tests/unit/test/ScanDetailPage.test.tsx
-import { render, screen } from '@testing-library/react'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { render, screen, cleanup } from '@testing-library/react'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { useScansStore } from '@/lib/store/scans'
-import ScanDetailPage from '@/app/test/[scanId]/page'
+import ClientView from '@/app/test/scan/ClientView'
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: vi.fn() }),
+  useSearchParams: () => ({ get: (key: string) => (key === 'id' ? 'SCN-XYZ' : null) }),
+}))
 
 describe('Scan detail page', () => {
   beforeEach(() => {
     localStorage.clear()
     useScansStore.setState({ scans: {} })
     useScansStore.getState().addScan({
-      id: 'SCN-XYZ' as any,
+      id: 'SCN-XYZ' as never,
       startedAt: '2026-05-27T10:00:00Z',
       endpoint: 'http://x', transport: 'http', spec: 'draft-2026-v1',
       durationMs: 1234, grade: 'B+',
@@ -20,10 +25,10 @@ describe('Scan detail page', () => {
       ],
     })
   })
+  afterEach(() => cleanup())
 
-  it('renders grade and check rows', async () => {
-    const Comp = await ScanDetailPage({ params: Promise.resolve({ scanId: 'SCN-XYZ' }) }) as any
-    render(Comp)
+  it('renders grade and check rows', () => {
+    render(<ClientView />)
     expect(screen.getByText('B+')).toBeTruthy()
     expect(screen.getByText('T-07')).toBeTruthy()
   })

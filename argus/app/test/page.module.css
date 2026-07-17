@@ -1,1 +1,32 @@
 .root { padding: var(--space-4); font-family: var(--font-mono); }
+.errorStrip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-3);
+  background: var(--color-bg1);
+  border: 1px solid var(--color-fail, #ff5252);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+.errorLabel {
+  color: var(--color-fail, #ff5252);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.errorMsg {
+  flex: 1;
+  color: var(--color-ink0);
+  word-break: break-word;
+}
+.errorRetry {
+  background: transparent;
+  color: var(--color-ink0);
+  border: 1px solid var(--color-grid);
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+.errorRetry:hover { border-color: var(--color-accent); color: var(--color-accent); }

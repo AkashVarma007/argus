@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import type { Route } from 'next'
 import styles from './page.module.css'
 import { ScanComposer, type ScanConfig } from '@/components/test/ScanComposer'
 import { LiveProgress } from '@/components/test/LiveProgress'
@@ -21,12 +22,16 @@ export default function TestIndexPage() {
   const addScan = useScansStore((s) => s.addScan)
   const addEndpoint = usePrefsStore((s) => s.addEndpoint)
   const [running, setRunning] = useState(false)
+  const [lastError, setLastError] = useState<string | null>(null)
+  const [lastConfig, setLastConfig] = useState<ScanConfig | null>(null)
   const [statuses, setStatuses] = useState<Record<string, CheckStatus | 'running'>>({})
   const checks = listChecks().filter((c) => c.appliesTo.includes('DRAFT-2026-v1'))
   const checkIds = checks.map((c) => c.id)
 
   const start = useCallback(async (cfg: ScanConfig) => {
     setRunning(true)
+    setLastError(null)
+    setLastConfig(cfg)
     setStatuses({})
     addEndpoint(cfg.endpoint)
 
@@ -107,14 +112,28 @@ export default function TestIndexPage() {
       })
 
       await client.close()
-      router.push(`/test/${scanId}`)
-    } catch {
+      router.push(`/test/scan?id=${encodeURIComponent(scanId)}` as Route)
+    } catch (err) {
+      setLastError(err instanceof Error ? err.message : String(err))
       setRunning(false)
     }
   }, [addScan, addEndpoint, checks, router])
 
+  const retryLast = useCallback(() => {
+    if (lastConfig) void start(lastConfig)
+  }, [lastConfig, start])
+
   return (
     <section className={styles.root}>
+      {!running && lastError && (
+        <div className={styles.errorStrip} data-argus="scan-error" role="alert">
+          <span className={styles.errorLabel}>Scan failed:</span>
+          <span className={styles.errorMsg}>{lastError}</span>
+          <button type="button" className={styles.errorRetry} onClick={retryLast}>
+            Retry
+          </button>
+        </div>
+      )}
       {!running && <ScanComposer onStart={start} />}
       {running && <LiveProgress checkIds={checkIds} statuses={statuses} />}
     </section>

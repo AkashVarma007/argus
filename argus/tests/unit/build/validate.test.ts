@@ -93,4 +93,39 @@ describe('validateBuild', () => {
     const issues = validateBuild(b)
     expect(issues.some((i) => i.severity === 'warning' && /not valid semver/i.test(i.message))).toBe(true)
   })
+
+  it('attaches a spec:// link to the missing-server-node issue', () => {
+    let b = createBuild()
+    b = removeNode(b, b.nodes[0].id)
+    const issues = validateBuild(b)
+    expect(issues[0].specRef).toMatch(/^spec:\/\//)
+    expect(issues[0].specRef).toContain('basic/lifecycle')
+  })
+
+  it('attaches a spec:// link to duplicate tool issues', () => {
+    let b = createBuild()
+    b = addNode(b, 'tool', toolA)
+    b = addNode(b, 'tool', toolDup)
+    const issues = validateBuild(b)
+    const dup = issues.find((i) => /duplicate tool name/i.test(i.message))
+    expect(dup?.specRef).toMatch(/^spec:\/\/server\/tools/)
+  })
+
+  it('attaches a spec:// link to bad inputSchema issues', () => {
+    let b = createBuild()
+    b = addNode(b, 'tool', {
+      ...toolA,
+      inputSchema: null as unknown as Record<string, unknown>,
+    })
+    const issues = validateBuild(b)
+    const bad = issues.find((i) => /invalid inputSchema/i.test(i.message))
+    expect(bad?.specRef).toMatch(/^spec:\/\/server\/tools/)
+  })
+
+  it('attaches a spec:// link to invalid semver warnings', () => {
+    const b = { ...createBuild(), packageMeta: { ...createBuild().packageMeta, version: 'alpha' } }
+    const issues = validateBuild(b)
+    const semver = issues.find((i) => /not valid semver/i.test(i.message))
+    expect(semver?.specRef).toMatch(/^spec:\/\//)
+  })
 })

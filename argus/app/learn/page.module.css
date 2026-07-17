@@ -1,0 +1,28 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.status {
+  padding: var(--space-4);
+  color: var(--color-ink2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.status code {
+  background: var(--color-surface2);
+  padding: 0 4px;
+  color: var(--color-accent);
+}
+
+.hint {
+  color: var(--color-ink1);
+}
+
+.error {
+  color: var(--color-fail);
+  margin-top: var(--space-3);
+}

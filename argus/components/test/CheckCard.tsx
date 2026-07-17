@@ -4,6 +4,8 @@
 import { useState, useEffect } from 'react'
 import styles from './CheckCard.module.css'
 import type { CheckResult } from '@/lib/store/types'
+import { useSpecIndex } from '@/lib/learn/useSpecIndex'
+import { resolveSpecHref } from '@/lib/learn/href'
 
 interface Props {
   result: CheckResult
@@ -15,6 +17,11 @@ interface Props {
 export function CheckCard({ result, title, specQuote, curlCommand }: Props) {
   const [open, setOpen] = useState(result.status === 'fail')
   useEffect(() => { setOpen(result.status === 'fail') }, [result.status])
+  const { index } = useSpecIndex()
+  const specHref =
+    result.specRef && result.specRef.startsWith('spec://') && index
+      ? resolveSpecHref(result.specRef, index)
+      : null
   return (
     <article className={styles.card} data-status={result.status}>
       <header className={styles.header} onClick={() => setOpen((v) => !v)}>
@@ -40,9 +47,16 @@ export function CheckCard({ result, title, specQuote, curlCommand }: Props) {
             <div className={styles.row}>
               <span className={styles.label}>spec</span>
               <blockquote>{specQuote}</blockquote>
-              {result.specRef && (
-                <a href={result.specRef} target="_blank" rel="noreferrer" className={styles.link} aria-label={result.specRef}>
-                  ↗
+              {specHref && (
+                <a
+                  href={specHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.link}
+                  data-spec-link="true"
+                  aria-label={`Open spec ${result.specRef}`}
+                >
+                  Open spec ↗
                 </a>
               )}
             </div>
