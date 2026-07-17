@@ -122,9 +122,9 @@ pnpm dev            # http://localhost:3000
 Press `g t` (or click **test**) to reach `/test`.
 
 - **HTTP server?** Paste its URL into **Endpoint**, leave transport on `streamable-http`, click **Run scan**.
-- **stdio server?** In another terminal:
+- **stdio server?** In another terminal, run the bridge from source (not yet on npm):
   ```bash
-  npx argus-bridge          # ws://127.0.0.1:7879/bridge
+  cd ../argus-bridge && pnpm install && pnpm dev    # ws://127.0.0.1:7879/bridge
   ```
   Then in the UI: transport → `stdio (via bridge)`, paste your server command (e.g. `node my-server.js` or `python -m my_server`), click **Run scan**.
 
@@ -242,7 +242,9 @@ The full **DRAFT-2026-v1** spec is **vendored at build time**. `pnpm prebuild` r
 
 ## 🌉 Companion packages
 
-Both live beside `argus/` in the monorepo and are published shaped for `npx`. **You only need them for the Test tool** — Build and Learn are fully browser-local.
+Both live beside `argus/` in the monorepo. **You only need them for the Test tool** — Build and Learn are fully browser-local.
+
+> ℹ️ Not yet published to npm — run them from source with `pnpm install && pnpm dev` (or `pnpm build` then the `dist/` CLI). The `npx` invocations below are the intended interface *once published*.
 
 ### `argus-bridge` — WebSocket ↔ stdio relay
 
