@@ -39,15 +39,13 @@
 This is a **multi-package repo**, not a single app. Each package installs and builds on its own (independent `pnpm-lock.yaml` per package — there is no root workspace). The app is the star; everything else exists to serve it or test it.
 
 ```
-MCP Builder/                     ← git root · the Argus platform
-├── 🔭 argus/                    the app — Next.js 15 SPA: Test · Build · Learn
-├── 🌉 argus-bridge/             WebSocket ↔ stdio relay — scan stdio-only servers
-├── 🔀 argus-proxy/              CORS relay — scan cross-origin HTTP servers
-├── 🧪 torture-server/           deliberately-broken MCP server (test fixture)
-├── 📖 modelcontextprotocol-main/ vendored upstream MCP spec (source for Learn + checks)
-├── 📋 docs/superpowers/         platform design spec + phase-by-phase build plans
-├── 🎨 argus-design-brief.md     product & brand brief (the "why it looks like this")
-└── ✅ mcp-conformance-spec.md   conformance catalog source
+MCP Builder/                 ← git root · the Argus platform
+├── 🔭 argus/                the app — Next.js 15 SPA (Test · Build · Learn)
+│   └── spec-source/draft/   vendored MCP DRAFT-2026-v1 spec (source for Learn + checks)
+├── 🌉 argus-bridge/         WebSocket ↔ stdio relay — scan stdio-only servers
+├── 🔀 argus-proxy/          CORS relay — scan cross-origin HTTP servers
+├── 🧪 torture-server/       deliberately-broken MCP server (test fixture)
+└── 📋 docs/                 design brief · conformance spec · platform spec + build plans
 ```
 
 | Package | What it is | Needs a companion? | README |
@@ -170,11 +168,11 @@ pnpm test:e2e
 
 | Path | What |
 |------|------|
-| [`argus-design-brief.md`](argus-design-brief.md) | The product & brand brief — audience, why it exists, the "dark instrument" design point of view. |
+| [`docs/argus-design-brief.md`](docs/argus-design-brief.md) | The product & brand brief — audience, why it exists, the "dark instrument" design point of view. |
+| [`docs/mcp-conformance-spec.md`](docs/mcp-conformance-spec.md) | Source catalog behind the conformance checks. |
 | [`docs/superpowers/specs/`](docs/superpowers/specs/) | The platform design spec (visual tokens, architecture, screens, success criteria). |
 | [`docs/superpowers/plans/`](docs/superpowers/plans/) | Phase-by-phase build plans (shell → test → build → learn → bridge → polish). |
-| [`mcp-conformance-spec.md`](mcp-conformance-spec.md) | Source catalog behind the conformance checks. |
-| [`modelcontextprotocol-main/`](modelcontextprotocol-main/) | Vendored upstream MCP specification — the source the Learn tool and check `specRef`s point at. |
+| [`argus/spec-source/draft/`](argus/spec-source/draft/) | Vendored MCP DRAFT-2026-v1 spec — the source `pnpm sync-spec` renders into the Learn tool. |
 
 ## 🧭 Status
 

@@ -13,10 +13,7 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url))
 const SOURCE_DIR = path.resolve(
   SCRIPT_DIR,
   '..',
-  '..',
-  'modelcontextprotocol-main',
-  'docs',
-  'specification',
+  'spec-source',
   'draft',
 )
 const OUT_DIR = path.resolve(
