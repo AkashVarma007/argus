@@ -1,11 +1,12 @@
 <div align="center">
 
 <pre>
- █████  ██████   ██████ ██   ██ ██████
-██   ██ ██   ██ ██      ██   ██ ██
-███████ ██████  ██  ███ ██   ██ ██████
-██   ██ ██   ██ ██   ██ ██   ██     ██
-██   ██ ██   ██  ██████  █████  ██████
+ █████╗ ██████╗  ██████╗ ██╗   ██╗███████╗
+██╔══██╗██╔══██╗██╔════╝ ██║   ██║██╔════╝
+███████║██████╔╝██║  ███╗██║   ██║███████╗
+██╔══██║██╔══██╗██║   ██║██║   ██║╚════██║
+██║  ██║██║  ██║╚██████╔╝╚██████╔╝███████║
+╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝
 </pre>
 
 **🔭 A browser-native instrument for the Model Context Protocol — scan any MCP server against a live conformance suite, compose a working server on a node canvas, and read the spec without leaving the tab. 🟢**

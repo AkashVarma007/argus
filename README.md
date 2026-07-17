@@ -1,11 +1,12 @@
 <div align="center">
 
 <pre>
- █████  ██████   ██████ ██   ██ ██████
-██   ██ ██   ██ ██      ██   ██ ██
-███████ ██████  ██  ███ ██   ██ ██████
-██   ██ ██   ██ ██   ██ ██   ██     ██
-██   ██ ██   ██  ██████  █████  ██████
+ █████╗ ██████╗  ██████╗ ██╗   ██╗███████╗
+██╔══██╗██╔══██╗██╔════╝ ██║   ██║██╔════╝
+███████║██████╔╝██║  ███╗██║   ██║███████╗
+██╔══██║██╔══██╗██║   ██║██║   ██║╚════██║
+██║  ██║██║  ██║╚██████╔╝╚██████╔╝███████║
+╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝
 </pre>
 
 **🔭 The Model Context Protocol workbench — test any MCP server against a live conformance suite, compose a working server on a node canvas, and read the spec in-app. All in the browser. No backend.**
